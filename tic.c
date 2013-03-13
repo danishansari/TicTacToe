@@ -21,8 +21,8 @@ int main()
 		        board[i][j] = 2;
 		disp_board();
 		input();
-		printf("\nPlay again(y/n)? ");
 		fflush(stdin);
+  		printf("\nPlay again(y/n)? ");
 		scanf("%c", &ch);
 		if(ch == 'y' || ch == 'Y')
 		    main();
@@ -60,7 +60,7 @@ void input()
 	{
 		if(turn%2)
 		{
-			printf("\nEnter your position: ");
+			printf("\nEnter your position('q' to abort): ");
 			fflush(stdin);
 			scanf("%c", &p);
 			if(p == 'q' || p == 'Q')
@@ -68,10 +68,8 @@ void input()
 			else
 			{
 				pos = p;
-				printf("\npos1 = %d", pos);
 				pos -= 48;
 			}
-			printf("\npos = %d", pos);
 			if(pos < 1 && pos > 9)
 			{
 				printf("\nInavalid position.");
@@ -84,7 +82,6 @@ void input()
 		}
 		else
 			pos = cpu(turn);
-		//printf("\n<< pos = %d>>\n", pos);
 		update_board(pos, turn);
 		g = game();
 		if(g == 27)
@@ -111,8 +108,8 @@ int cpu(int t)
 	int a, i;
 	if(t == 4 && board[1][1] == 3)
 	{
-	    board[2][2] == 3;
-	    return 7;
+	    if(board[2][2] == 3)
+	    	return 7;
 	}
 	if(t == 2)
 	{
@@ -128,32 +125,26 @@ int cpu(int t)
 		    return a;
 		else
 		{
-			//printf("\nelse\n");
-			//printf("\n<<dir, ind, ans = %d, %d, %d >>\n", dir, ind, a);
 			if(dir == 1)
 			{
-			//	printf("\n1st\n");
 				for(i=0;i<3;i++)
 					if(board[ind][i] == 2)
 					    return ind*3+i+1;
 			}
 			else if(dir == 2)
 			{
-                //printf("\n2nd\n");
                 for(i=0;i<3;i++)
 					if(board[i][ind] == 2)
 					    return i*3+ind+1;
 			}
 			else if(dir == 3)
 			{
-                //printf("\n3rd\n");
                 for(i=0;i<3;i++)
 					if(board[i][i] == 2)
 					    return i*3+i+1;
 			}
 			else if(dir == 4)
 			{
-                //printf("\n4th\n");
                 for(i=0;i<3;i++)
 					if(board[i][2-i] == 2)
 					    return i*3+(2-i)+1;
@@ -171,11 +162,9 @@ int posswin()
 		pro1 = board[i][0]*board[i][1]*board[i][2];
 		if(pro1 == 24 || pro1 == 36 || pro1 == 48)
 		    pro1 = 1;
-		//printf("\npro1 = %d\n", pro1);
 		pro2 = board[0][i]*board[1][i]*board[2][i];
 		if(pro2 == 24 || pro2 == 36 || pro2 == 48)
 		    pro2 = 1;
-		//printf("\npro2 = %d\n", pro2);
 		if(pro1 > ans || pro2 > ans)
 		{
 			if(pro1 >= pro2)
@@ -195,11 +184,9 @@ int posswin()
 	pro1 = board[0][0]*board[1][1]*board[2][2];
 	if(pro1 == 24 || pro1 == 36 || pro1 == 48)
 		    pro1 = 1;
- 	//printf("\npro1 = %d\n", pro1);
 	pro2 = board[0][2]*board[1][1]*board[2][0];
 	if(pro2 == 24 || pro2 == 36 || pro2 == 48)
 		    pro2 = 1;
- 	//printf("\npro2 = %d\n", pro2);
 	if(pro1 > ans || pro2 > ans)
 	{
 		if(pro1 > pro2)
